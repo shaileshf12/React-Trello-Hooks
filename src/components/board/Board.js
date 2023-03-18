@@ -5,49 +5,43 @@ import BoardCreate from "./BoardCreate";
 import "../style.css";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { fetchBoards } from "../../redux/board/boardAction";
+import { connect } from "react-redux";
+import { fetchBoardData } from "../../redux/store";
 
-export default function Board() {
-  const [boards, setBoards] = useState([]);
-  const [newBoard, setNewBoard] = useState("");
-  const [deletedBaord, setDeletedBoard] = useState();
+function Board({getAllBoards, boards, newBoard, deletedBoard}) {
 
   useEffect(() => {
-    getBoards().then((data) => {
-      setBoards(data);
-    });
-  }, [newBoard, deletedBaord]);
-
-  const allBoards = boards.map((board) => {
-    return (
-      <BoardsDisplay
-        key={board.id}
-        board={board}
-        setDeletedBoard={setDeletedBoard}
-      />
-    );
-  });
+    getAllBoards()
+  }, [newBoard, deletedBoard]);
 
   return (
     <div className="main">
-      <div className="workspace-heading">
-        Your Workspaces
-      </div>
+      <div className="workspace-heading">Your Workspaces</div>
 
       <div className="all-boards">
-        {boards.map((board) => {
-          return (
-            <BoardsDisplay
-              key={board.id}
-              board={board}
-              setDeletedBoard={setDeletedBoard}
-            />
-          );
-        })}
+        <BoardsDisplay/>
       </div>
 
       <div>
-      <BoardCreate setNewBoard={setNewBoard} />
+        <BoardCreate />
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    boards : state.board.boards,
+    newBoard : state.board.createdBoard,
+    deletedBoard : state.board.deletedBoard
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllBoards : ()=> dispatch(fetchBoardData())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getLists } from "../api";
 import { useParams } from "react-router-dom";
 import ListsDisplay from "./ListsDisplay";
 import ListCreate from "./ListCreate";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { fetchListData } from '../../redux/store'
+import { connect } from 'react-redux'
 
-function List() {
+function List({getAllLists, lists, newList, deletedList}) {
   const params = useParams();
   const { boardId } = params;
 
-  const [lists, setLists] = useState([]);
-  const [newList, setNewList] = useState();
-  const [deletedList, setDeletedList] = useState()
-
   useEffect(() => {
-    getLists(boardId).then((lists) => {
-      setLists(lists);
-    });
+    getAllLists(boardId)
   },[newList, deletedList]);
 
   const navigate = useNavigate()
@@ -28,13 +24,11 @@ function List() {
       <Button variant="secondary" onClick={()=>navigate(-1)}>Back</Button>
       <div className="list-main">
         <div className="lists">
-          {lists.map((list) => (
-            <ListsDisplay key={list.id} list={list} setDeletedList={setDeletedList}/>
-          ))}
+          <ListsDisplay/>
         </div>
 
         <div className="input-list">
-          <ListCreate setNewList={setNewList} boardId={boardId} />
+          <ListCreate boardId={boardId} />
         </div>
       </div>
 
@@ -42,4 +36,18 @@ function List() {
   );
 }
 
-export default List;
+const mapStateToProps = (state) => {
+  return {
+    lists : state.list.lists,
+    newList : state.list.createdList,
+    deletedList : state.list.deletedList
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllLists : (boardId)=> dispatch(fetchListData(boardId))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (List);

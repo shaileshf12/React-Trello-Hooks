@@ -1,8 +1,11 @@
 import axios from "axios";
 
 
-const key = process.env.REACT_APP_KEY
-const token = process.env.REACT_APP_TOKEN
+// const key = process.env.REACT_APP_KEY
+// const token = process.env.REACT_APP_TOKEN
+const key = '93dbec55a094cbfd2af50527e6731759';
+const token = 'c28b8c32e7b021b04ef8939c8c5b5d7abe7191bc31a44e6c5c0746f6c11b195c';
+
 
 
 export function getBoards() {

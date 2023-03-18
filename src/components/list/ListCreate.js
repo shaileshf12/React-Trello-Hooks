@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { createList } from "../api";
 import CloseButton from "react-bootstrap/CloseButton";
+import { addList } from "../../redux/list/listAction";
+import { connect } from "react-redux";
 
 function ListCreate(props) {
   const [listName, setListName] = useState("");
@@ -13,7 +15,8 @@ function ListCreate(props) {
   function submitHandler(event) {
     event.preventDefault();
     createList(listName, props.boardId).then((list) => {
-      props.setNewList(list.id);
+      // props.setNewList(list.id);
+      props.addNewList(list.id);
     });
   }
 
@@ -23,11 +26,6 @@ function ListCreate(props) {
 
   return (
     <div>
-      {/* <form onSubmit={submitHandler}>
-            <input onChange={changeHandler} value={listName}></input>
-            <button type='submit'>Add List</button>
-        </form> */}
-
       {!inputDisplay ? (
         <button className="add-button" onClick={inputHandler}>
           + Add a List
@@ -52,4 +50,10 @@ function ListCreate(props) {
   );
 }
 
-export default ListCreate;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewList: (id) => dispatch(addList(id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps) (ListCreate);

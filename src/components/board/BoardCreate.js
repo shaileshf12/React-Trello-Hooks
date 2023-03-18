@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { createBoard } from "../api";
 import { Button, Form, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from "react-redux";
+import { addBoard } from "../../redux/board/boardAction";
 
 function BoardCreate(props) {
   const [show, setShow] = useState(false);
@@ -16,25 +18,22 @@ function BoardCreate(props) {
   }
 
   function boardSubmitHandler(e) {
-    // e.preventDefault()
-    console.log(boardName);
+    e.preventDefault()
     createBoard(boardName)
       .then((data) => {
-        props.setNewBoard(data.name);
+        // props.setNewBoard(data.name);
+        props.addABoard(data.id)
       })
       .catch((e) => {
         console.log(e);
       });
+    // props.addBoard(boardName)
 
     handleClose();
   }
 
   return (
     <div>
-      {/* <input onChange={boardInputHandler}></input>
-      <button onClick={boardSubmitHandler}>Create</button> */}
-
-      
         <Button variant="primary" onClick={handleShow} className='board'>
           Create Board
         </Button>
@@ -69,4 +68,11 @@ function BoardCreate(props) {
   );
 }
 
-export default BoardCreate;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addABoard : (id)=> dispatch(addBoard(id))
+  };
+};
+
+export default connect(null, mapDispatchToProps) (BoardCreate);

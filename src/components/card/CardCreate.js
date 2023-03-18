@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createCard } from "../api";
 import CloseButton from "react-bootstrap/CloseButton";
 
+
 function CardCreate(props) {
   const [cardName, setCardName] = useState("");
 
@@ -24,9 +25,6 @@ function CardCreate(props) {
     setInputDisplay((prevState => !prevState))
   }
 
-//   style={{display : inputDisplay===false ? 'block' : 'none'}}
-// style={{display : inputDisplay ? 'block' : 'none'}}
-
   return (
     <div>
 
@@ -47,5 +45,6 @@ function CardCreate(props) {
     </div>
   );
 }
+
 
 export default CardCreate;
