@@ -48,7 +48,7 @@ function Checklist(props) {
           })}
           </CardIdContext.Provider>
         </div>
-        <div>
+        <div className="input-checklist">
           <ChecklistCreate cardId={cardId} setNewChecklist={setNewChecklist} />
         </div>
       </div>

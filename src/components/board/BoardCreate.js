@@ -14,6 +14,7 @@ function BoardCreate(props) {
   const [boardName, setBoardName] = useState("");
 
   function boardInputHandler(e) {
+    console.log(e.target.value)
     setBoardName(e.target.value);
   }
 
