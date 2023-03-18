@@ -1,7 +1,7 @@
 import React from "react";
 import { deleteList } from "../api";
 import Card from "../card/Card";
-import { removeList, getListIdForCards } from "../../redux/list/listAction";
+import { removeList } from "../../redux/list/listAction";
 import { connect } from "react-redux";
 
 function ListsDisplay(props) {
@@ -9,13 +9,14 @@ function ListsDisplay(props) {
     console.log(list.id);
     deleteList(list.id).then((list) => {
       // props.setDeletedList(list.id)
-      props.deleteAList(list.id);
+      props.deleteAList(list);
     });
   }
 
   return (
     <>
-      {props.lists.map((list) => {
+      {props.loading ? <h1>Loading ...</h1> : 
+       props.lists.map((list) => {
         return (<div key={list.id} className="each-list">
           <div>
             <h3 className="list-name">{list.name}</h3>
@@ -38,13 +39,13 @@ function ListsDisplay(props) {
 const mapStateToProps = (state) => {
   return {
     lists: state.list.lists,
+    loading : state.list.loading
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteAList: (id) => dispatch(removeList(id)),
-    getListId: (id) => dispatch(getListIdForCards(id)),
   };
 };
 

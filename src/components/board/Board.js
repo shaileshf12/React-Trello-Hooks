@@ -9,11 +9,13 @@ import { fetchBoards } from "../../redux/board/boardAction";
 import { connect } from "react-redux";
 import { fetchBoardData } from "../../redux/store";
 
-function Board({getAllBoards, boards, newBoard, deletedBoard}) {
+function Board({getAllBoards}) {
+
 
   useEffect(() => {
     getAllBoards()
-  }, [newBoard, deletedBoard]);
+  }, []);
+
 
   return (
     <div className="main">
@@ -33,8 +35,6 @@ function Board({getAllBoards, boards, newBoard, deletedBoard}) {
 const mapStateToProps = (state) => {
   return {
     boards : state.board.boards,
-    newBoard : state.board.createdBoard,
-    deletedBoard : state.board.deletedBoard
   };
 };
 

@@ -14,7 +14,8 @@ export function getBoards() {
         return res.data
     })
     .catch((err)=>{
-        console.log(err)
+        // console.log(err)
+        return err
     })
 }
 

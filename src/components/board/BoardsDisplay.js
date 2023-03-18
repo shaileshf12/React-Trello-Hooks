@@ -9,19 +9,22 @@ function BoardsDisplay(props) {
   function deleteBoardHandler(board) {
     deleteBoard(board.id)
       .then((data) => {
-        // props.setDeletedBoard(board.name)
-        props.deleteABoard(board.id);
+        console.log(data)
+        props.deleteABoard(board);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+
   const navigate = useNavigate();
+
 
   return (
     <>
-      {props.boards.map((board) => {
+      { props.loading ? <h1>Loading ...</h1> : 
+      props.boards.map((board) => {
         return (<div key={board.id} className="board-outer">
           <button
             onClick={() => {
@@ -43,12 +46,13 @@ function BoardsDisplay(props) {
 const mapStateToProps = (state) => {
   return {
     boards: state.board.boards,
+    loading: state.board.loading
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteABoard: (id) => dispatch(removeBoard(id)),
+    deleteABoard: (board) => dispatch(removeBoard(board)),
   };
 };
 

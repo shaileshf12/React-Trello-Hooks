@@ -16,7 +16,7 @@ function ListCreate(props) {
     event.preventDefault();
     createList(listName, props.boardId).then((list) => {
       // props.setNewList(list.id);
-      props.addNewList(list.id);
+      props.addNewList(list);
     });
   }
 
@@ -52,7 +52,7 @@ function ListCreate(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewList: (id) => dispatch(addList(id)),
+    addNewList: (list) => dispatch(addList(list)),
   };
 };
 

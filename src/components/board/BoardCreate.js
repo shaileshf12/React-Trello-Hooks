@@ -21,8 +21,10 @@ function BoardCreate(props) {
     e.preventDefault()
     createBoard(boardName)
       .then((data) => {
+        console.log(data)
         // props.setNewBoard(data.name);
-        props.addABoard(data.id)
+        props.addABoard(data)
+        // props.boards = [... props.boards, data]
       })
       .catch((e) => {
         console.log(e);
@@ -68,10 +70,15 @@ function BoardCreate(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    boards : state.board.boards
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addABoard : (id)=> dispatch(addBoard(id))
+    addABoard : (board)=> dispatch(addBoard(board))
   };
 };
 

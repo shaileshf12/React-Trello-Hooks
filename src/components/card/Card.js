@@ -21,7 +21,7 @@ function Card(props) {
     },[newCard, deletedCard])
 
   return (
-    <div className=''>
+    <div >
         {cards.map((card)=> {
             return <CardsDisplay key={card.id} card={card} list={props.list} setDeletedCard={setDeletedCard}/>
         })}

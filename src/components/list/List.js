@@ -14,7 +14,7 @@ function List({getAllLists, lists, newList, deletedList}) {
 
   useEffect(() => {
     getAllLists(boardId)
-  },[newList, deletedList]);
+  },[]);
 
   const navigate = useNavigate()
 

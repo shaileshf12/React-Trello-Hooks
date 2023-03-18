@@ -1,10 +1,8 @@
-import { FETCH_LIST, CREATE_LIST, DELETE_LIST, GET_LIST_ID  } from "./listType"
+import { FETCH_LIST, CREATE_LIST, DELETE_LIST, FETCH_LIST_SUCCESS  } from "./listType"
 
 const initialState = {
-    lists : [],
-    createdList : '',
-    deletedList : '',
-    listId : ''
+    loading : false,
+    lists : []
 }
 
 const listReducer = (state=initialState, action) =>{
@@ -12,22 +10,25 @@ const listReducer = (state=initialState, action) =>{
     {
         case FETCH_LIST : return {
             ...state,
-            lists : action.payload
+            loading : true
+        }
+
+        case FETCH_LIST_SUCCESS : return  {
+            ...state,
+            lists : action.payload,
+            loading : false
         }
 
         case CREATE_LIST : return {
             ...state,
-            createdList : action.payload
+            lists : [...state.lists, action.payload]
         }
 
         case DELETE_LIST : return {
             ...state,
-            deletedList : action.payload
-        }
-
-        case GET_LIST_ID : return {
-            ...state,
-            listId : action.payload
+            lists : state.lists.filter((list)=>{
+                return list.id!==action.payload.id
+            })
         }
 
         default : return state

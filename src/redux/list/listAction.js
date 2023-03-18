@@ -1,8 +1,14 @@
-import { CREATE_LIST, FETCH_LIST, DELETE_LIST, GET_LIST_ID } from "./listType"
+import { CREATE_LIST, FETCH_LIST, DELETE_LIST, FETCH_LIST_SUCCESS } from "./listType"
 
-export const fetchLists = (lists) =>{
+export const fetchLists = () =>{
     return {
-        type : FETCH_LIST,
+        type : FETCH_LIST
+    }
+}
+
+export const fetchListSuccess= (lists) =>{
+    return {
+        type : FETCH_LIST_SUCCESS,
         payload : lists
     }
 }
@@ -20,10 +26,4 @@ export const removeList = (listId) => {
         payload : listId
     }
 }
-
-export const getListIdForCards = (listId) => {
-    return {
-        type : GET_LIST_ID,
-        payload : listId
-    }
-} 
+ 

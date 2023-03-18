@@ -2,8 +2,7 @@ import { FETCH_CARD, CREATE_CARD, DELETE_CARD } from "./cardType"
 
 const initialState = {
     cards : [],
-    createdCard : '',
-    deletedCard : '',
+    
 }
 
 const cardReducer = (state=initialState, action) =>{
@@ -16,12 +15,14 @@ const cardReducer = (state=initialState, action) =>{
 
         case CREATE_CARD : return {
             ...state,
-            createdCard : action.payload
+            card : [...state.cards, action.payload]
         }
 
         case DELETE_CARD : return {
             ...state,
-            deletedCard : action.payload
+            cards : state.cards.filter((card)=>{
+                return card.id!==action.payload.id
+            })
         }
 
         default : return state
