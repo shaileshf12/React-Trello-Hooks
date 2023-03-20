@@ -1,5 +1,6 @@
 import { FETCH_LIST, CREATE_LIST, DELETE_LIST, FETCH_LIST_SUCCESS  } from "./listType"
 
+
 const initialState = {
     loading : false,
     lists : []

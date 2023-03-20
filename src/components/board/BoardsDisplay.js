@@ -7,14 +7,8 @@ import { connect } from "react-redux";
 
 function BoardsDisplay(props) {
   function deleteBoardHandler(board) {
-    deleteBoard(board.id)
-      .then((data) => {
-        console.log(data)
-        props.deleteABoard(board);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    
+    props.deleteABoard(board, board.id)
   }
 
 
@@ -52,7 +46,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteABoard: (board) => dispatch(removeBoard(board)),
+    deleteABoard: (board, boardId) => dispatch(removeBoard(board, boardId)),
   };
 };
 

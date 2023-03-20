@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { createList } from "../api";
 import CloseButton from "react-bootstrap/CloseButton";
 import { addList } from "../../redux/list/listAction";
 import { connect } from "react-redux";
@@ -14,10 +13,7 @@ function ListCreate(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    createList(listName, props.boardId).then((list) => {
-      // props.setNewList(list.id);
-      props.addNewList(list);
-    });
+    props.addNewList(listName, props.boardId);
   }
 
   function inputHandler() {
@@ -52,7 +48,7 @@ function ListCreate(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNewList: (list) => dispatch(addList(list)),
+    addNewList: (listName, boardId) => dispatch(addList(listName, boardId)),
   };
 };
 

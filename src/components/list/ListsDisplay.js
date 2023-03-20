@@ -1,16 +1,12 @@
 import React from "react";
-import { deleteList } from "../api";
 import Card from "../card/Card";
 import { removeList } from "../../redux/list/listAction";
 import { connect } from "react-redux";
 
 function ListsDisplay(props) {
+
   function deleteListHandler(list) {
-    console.log(list.id);
-    deleteList(list.id).then((list) => {
-      // props.setDeletedList(list.id)
-      props.deleteAList(list);
-    });
+    props.deleteAList(list.id);
   }
 
   return (

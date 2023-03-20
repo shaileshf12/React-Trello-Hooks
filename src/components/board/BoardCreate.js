@@ -14,23 +14,12 @@ function BoardCreate(props) {
   const [boardName, setBoardName] = useState("");
 
   function boardInputHandler(e) {
-    console.log(e.target.value)
     setBoardName(e.target.value);
   }
 
   function boardSubmitHandler(e) {
     e.preventDefault()
-    createBoard(boardName)
-      .then((data) => {
-        console.log(data)
-        // props.setNewBoard(data.name);
-        props.addABoard(data)
-        // props.boards = [... props.boards, data]
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // props.addBoard(boardName)
+    props.addABoard(boardName)
 
     handleClose();
   }
@@ -71,15 +60,10 @@ function BoardCreate(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    boards : state.board.boards
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addABoard : (board)=> dispatch(addBoard(board))
+    addABoard : (boardName)=> dispatch(addBoard(boardName))
   };
 };
 

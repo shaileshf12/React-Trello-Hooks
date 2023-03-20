@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { createCard } from "../api";
 import CloseButton from "react-bootstrap/CloseButton";
+import { useDispatch } from "react-redux";
+import { addCard } from "../../redux/card/cardAction";
 
 
 function CardCreate(props) {
   const [cardName, setCardName] = useState("");
+  const dispatch = useDispatch()
 
   function changeHandler(event) {
     setCardName(event.target.value);
@@ -12,16 +15,15 @@ function CardCreate(props) {
 
   function cardSubmitHandler(event) {
     event.preventDefault();
-    createCard(props.list.id, cardName).then((addedCard) => {
-      // console.log(addedCard.id)
-      props.setNewCard(addedCard.id);
-    });
+    // createCard(props.list.id, cardName).then((addedCard) => {
+    //   props.setNewCard(addedCard.id);
+    // });
+    dispatch(addCard(props.list.id, cardName))
   }
 
   const [inputDisplay, setInputDisplay] = useState(false)
 
   function inputHandler() {
-    console.log("Hello")
     setInputDisplay((prevState => !prevState))
   }
 

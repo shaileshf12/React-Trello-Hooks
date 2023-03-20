@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchBoards } from "../../redux/board/boardAction";
 import { connect } from "react-redux";
-import { fetchBoardData } from "../../redux/store";
+import { fetchBoardData } from "../../redux/board/boardAction";
 
 function Board({getAllBoards}) {
 

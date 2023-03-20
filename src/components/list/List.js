@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
-import { getLists } from "../api";
 import { useParams } from "react-router-dom";
 import ListsDisplay from "./ListsDisplay";
 import ListCreate from "./ListCreate";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { fetchListData } from '../../redux/store'
+import { fetchListData } from '../../redux/list/listAction'
 import { connect } from 'react-redux'
 
-function List({getAllLists, lists, newList, deletedList}) {
+function List({getAllLists}) {
   const params = useParams();
   const { boardId } = params;
 

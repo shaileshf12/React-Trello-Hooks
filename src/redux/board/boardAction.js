@@ -1,31 +1,46 @@
 
-import { DELETE_BOARD, FETCH_BOARDS, FETCH_BOARDS_SUCCESS } from "./boardTypes";
-import { CREATE_BOARD } from "./boardTypes";
+import { DELETE_BOARD, FETCH_BOARDS, FETCH_BOARDS_SUCCESS, CREATE_BOARD } from "./boardTypes";
+import { getBoards, createBoard, deleteBoard } from "../../components/api";
 
-export const fetchBoards = () =>{
-    return {
+export const fetchBoardData = () => {
+    return (dispatch) => {
+
+      dispatch({
         type : FETCH_BOARDS,
+    });
+
+      getBoards()
+        .then((data) => {
+            // console.log(data)
+          dispatch({
+            type : FETCH_BOARDS_SUCCESS,
+            payload : data
+        });
+        })
+    };
+  };
+
+
+export const addBoard = (boardName) => {
+
+    return (dispatch)=>{
+        createBoard(boardName).then((data)=>{
+            dispatch({
+                type : CREATE_BOARD,
+                payload : data
+            })
+        })
     }
 }
 
-export const fetchBoardSuccess = (boards) => {
-    return {
-        type : FETCH_BOARDS_SUCCESS,
-        payload : boards
+export const removeBoard = (board, boardId) => {
 
-    }
-}
-
-export const addBoard = (board) => {
-    return {
-        type : CREATE_BOARD,
-        payload : board
-    }
-}
-
-export const removeBoard = (board) => {
-    return {
-        type : DELETE_BOARD,
-        payload : board
+    return (dispatch) => {
+        deleteBoard(boardId).then((data)=>{
+            dispatch({
+                type : DELETE_BOARD,
+                payload : board
+            })
+        })
     }
 }
