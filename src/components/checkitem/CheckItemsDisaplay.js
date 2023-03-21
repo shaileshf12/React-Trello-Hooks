@@ -1,16 +1,15 @@
-import React, {useState, useContext, useEffect} from 'react'
-import { deleteCheckItem } from '../api'
-import { updateCheckItem } from '../api'
-import { CardIdContext } from '../checklist/Checklist'
+import React, {useState} from 'react'
+import { removeCheckItem } from '../../redux/checkitem/itemAction'
+import { useDispatch, useSelector} from 'react-redux'
+import { updateItem } from '../../redux/checkitem/itemAction'
 
 function CheckItemsDisaplay(props) {
 
-    const cardId = useContext(CardIdContext)
+    const cardId = useSelector((state)=>state.checkList.cardId)
+    const dispatch = useDispatch()
 
     function deleteCheckItemHandler(params) {
-        deleteCheckItem(props.checkListId, props.checkItem.id).then((deltedItem)=>{
-            props.setDeletedCheckItem(deltedItem.id)
-        })
+        dispatch(removeCheckItem(props.checkListId, props.checkItem.id))
     }
 
     const initialState = props.checkItem.state==='complete' ? true : false
@@ -18,16 +17,9 @@ function CheckItemsDisaplay(props) {
 
     function itemChangeHandler(event) {
         setIsChecked(!isChecked)
-
+        const newState = event.target.checked ? 'complete' : 'incomplete'
+        dispatch(updateItem(cardId, props.checkListId, props.checkItem.id, newState))
     }
-
-    useEffect(()=>{
-        const newState = isChecked ? 'complete' : 'incomplete'
-        updateCheckItem(cardId, props.checkListId, props.checkItem.id, newState).then((item)=>{
-            props.setUpdatedItem(item.id+""+item.state)
-        })
-
-    }, [isChecked])
 
   return (
     <div>

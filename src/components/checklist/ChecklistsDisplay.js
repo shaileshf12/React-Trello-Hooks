@@ -1,16 +1,21 @@
 
 import React from 'react'
-import { deleteChecklist } from '../api'
 import CheckItem from '../checkitem/CheckItem'
 import { Button } from 'react-bootstrap'
+import { removeCheckList } from '../../redux/checklist/checkListAction'
+import { useDispatch, useSelector } from 'react-redux'
 
 function ChecklistsDisplay(props) {
 
+    const dispatch = useDispatch()
+    const cardId = useSelector((state)=>state.checkList.cardId)
+
     function deleteChecklistHandler() {
-        deleteChecklist(props.cardId, props.checklist.id).then((deletedChecklist)=>{
-            console.log(deletedChecklist)
-            props.setDeletedChecklist(deleteChecklist.id)
-        })
+        // deleteChecklist(props.cardId, props.checklist.id).then((deletedChecklist)=>{
+        //     console.log(deletedChecklist)
+        //     props.setDeletedChecklist(deleteChecklist.id)
+        // })
+        dispatch(removeCheckList(cardId, props.checklist.id))
     }
 
   return (

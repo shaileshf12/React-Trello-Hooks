@@ -1,35 +1,35 @@
 
-import React, {useState, useEffect} from 'react'
-import { getCheckItem } from '../api'
+import React, {useEffect} from 'react'
 import CheckItemsDisaplay from './CheckItemsDisaplay'
 import CheckItemCreate from './CheckItemCreate'
 import Progressbar from './Progressbar'
+import { fetchCheckitems } from '../../redux/checkitem/itemAction'
+import { useDispatch, useSelector } from 'react-redux'
 
 function CheckItem(props) {
-  const [checkItems, setCheckItems] = useState([])
-  const [newCheckItem, setNewCheckItem] = useState('')
-  const [deletedCheckItem, setDeletedCheckItem] = useState('')
-  const [updatedItem, setUpdatedItem] = useState('')
-
+  const dispatch = useDispatch()
+  const checkItems = useSelector((state)=>state.checkItem.checkItems[props.checkListId])
   useEffect(()=>{
-    getCheckItem(props.checkListId).then((checkItems)=>{
-      setCheckItems(checkItems)
-      // console.log("Hello")
-    })
-  }, [newCheckItem, deletedCheckItem, updatedItem])
+    dispatch(fetchCheckitems(props.checkListId))
+    
+  }, [])
 
   return (
+    <>
+    {checkItems!==undefined &&
     <div className='checkItem'>
       <div>
-      <Progressbar checkItems={checkItems} updatedItem={updatedItem}/>
+      <Progressbar checkItems={checkItems}/>
       </div>
-      {checkItems.map((checkItem)=>{
+      {checkItems!==undefined && checkItems.map((checkItem)=>{
         return <CheckItemsDisaplay
-         key={checkItem.id} checkListId={props.checkListId} checkItem={checkItem} setUpdatedItem={setUpdatedItem} setDeletedCheckItem={setDeletedCheckItem}
+         key={checkItem.id} checkListId={props.checkListId} checkItem={checkItem}
          />
       })}
-      <CheckItemCreate checkListId={props.checkListId} setNewCheckItem={setNewCheckItem}/>
+      <CheckItemCreate checkListId={props.checkListId}/>
     </div>
+    }
+    </>
   )
 }
 

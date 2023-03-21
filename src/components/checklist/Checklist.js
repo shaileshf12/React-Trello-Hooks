@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { getChecklists } from "../api";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ChecklistsDisplay from "./ChecklistsDisplay";
 import ChecklistCreate from "./ChecklistCreate";
 import { useNavigate} from 'react-router-dom'
 import { Button  } from 'react-bootstrap'
-
-
-export const CardIdContext = React.createContext()
+import { fetchCheckLists, getCardId } from "../../redux/checklist/checkListAction";
+import { useSelector, useDispatch } from "react-redux";
 
 function Checklist(props) {
-  const [checklists, setChecklists] = useState([]);
-  const [newChecklist, setNewChecklist] = useState("");
-  const [deleteChecklist, setDeletedChecklist] = useState("");
-  
 
   const params = useParams();
   const cardId = params.cardId;
 
-
-  // const {show, onHide} = location.state
-
+  const {checkLists} = useSelector((state)=>state.checkList)
+  const dispatch = useDispatch()
   useEffect(() => {
-    getChecklists(cardId).then((checklists) => {
-      setChecklists(checklists);
-    });
-  }, [newChecklist, deleteChecklist]);
+    dispatch(fetchCheckLists(cardId))
+    dispatch(getCardId(cardId))
+  }, []);
 
   const navigate = useNavigate()
 
@@ -35,21 +27,17 @@ function Checklist(props) {
       <Button variant="secondary" onClick={()=>navigate(-1)}>Back</Button>
       <div className="main-checklist">
         <div className="all-checklists">
-          <CardIdContext.Provider value={cardId}>
-          {checklists.map((checklist) => {
+          {checkLists.map((checklist) => {
             return (
               <ChecklistsDisplay
                 key={checklist.id}
-                cardId={cardId}
                 checklist={checklist}
-                setDeletedChecklist={setDeletedChecklist}
               />
             );
           })}
-          </CardIdContext.Provider>
         </div>
         <div className="input-checklist">
-          <ChecklistCreate cardId={cardId} setNewChecklist={setNewChecklist} />
+          <ChecklistCreate/>
         </div>
       </div>
     </div>
