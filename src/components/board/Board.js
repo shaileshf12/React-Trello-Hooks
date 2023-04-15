@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { getBoards } from "../api";
+import React, { useEffect } from "react";
 import BoardsDisplay from "./BoardsDisplay";
 import BoardCreate from "./BoardCreate";
 import "../style.css";
-import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fetchBoards } from "../../redux/board/boardAction";
 import { connect } from "react-redux";
 import { fetchBoardData } from "../../redux/board/boardAction";
 
 function Board({getAllBoards}) {
-
-
   useEffect(() => {
     getAllBoards()
   }, []);
